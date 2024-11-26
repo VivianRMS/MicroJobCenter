@@ -1,6 +1,6 @@
 package com.vivianrms.jobms.job;
 
-import com.vivianrms.jobms.job.dto.JobWithCompanyDTO;
+import com.vivianrms.jobms.job.dto.JobDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ public class JobController {
     }
 
     @GetMapping
-    public ResponseEntity<List<JobWithCompanyDTO>> findAll(){
+    public ResponseEntity<List<JobDTO>> findAll(){
         return ResponseEntity.ok(jobService.findAll());
     }
 
@@ -30,8 +30,8 @@ public class JobController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Job> getJobById(@PathVariable Long id){
-        Job job = jobService.getJobById(id);
+    public ResponseEntity<JobDTO> getJobById(@PathVariable Long id){
+        JobDTO job = jobService.getJobById(id);
         if(job != null) {
             return new ResponseEntity<>(job, HttpStatus.OK);
         }
