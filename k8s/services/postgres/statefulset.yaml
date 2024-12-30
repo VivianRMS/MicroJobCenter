@@ -1,0 +1,43 @@
+# manage deployment of a set of pods and guarantee ordering and uniqueness
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+  labels:
+    app: postgres
+spec:
+  serviceName: postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres
+          imagePullPolicy: IfNotPresent
+          envFrom: # import configuration and environement var from configmap
+            - configMapRef:
+                name: postgres-config
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          volumeMounts: # define where the volume will be mounted in the container
+            - name: postgres-data
+              mountPath: "/var/lib/postgresql/data"
+  volumeClaimTemplates: # template for creating persistent volume claims
+    - metadata:
+        name: postgres-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 5Gi # a volume claim requests a specific amount of storage that can be used by a particular pod

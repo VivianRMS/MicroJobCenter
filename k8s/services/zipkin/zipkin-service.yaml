@@ -1,0 +1,13 @@
+# responsible for providing the network access to one or more pods
+apiVersion: v1
+kind: Service
+metadata:
+  name: zipkin
+spec:
+  selector:
+    app: zipkin
+  ports:
+  - protocol: TCP
+    port: 9411
+    targetPort: 9411 # map port 9411 on the service to port 9411 on the target pods
+  type: LoadBalancer # provision an external load balancer that can route traffic to the pods selected by the service
