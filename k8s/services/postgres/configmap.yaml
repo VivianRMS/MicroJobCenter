@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: postgres-config
-data: # k-v pairs for configuration data
+data: 
   POSTGRES_DB: vivianrms
   POSTGRES_USER: vivianrms
-  POSTGRES_PASSWORD: password
+  POSTGRES_PASSWORD: vivianrms

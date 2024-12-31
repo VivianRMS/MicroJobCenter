@@ -1,4 +1,3 @@
-# responsible for maintaining a specific number of replica pods running in the cluster
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -7,14 +6,14 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: zipkin # select pods with label 'app: zipkin' to manage
+      app: zipkin
   template:
     metadata:
       labels:
-        app: zipkin # define labels to apply to pods creadted by this deployment
+        app: zipkin
     spec:
       containers:
-      - name: zipkin
-        image: openzipkin/zipkin:latest
-        ports:
-        - containerPort: 9411 # expose 9411 port within this container
+        - name: zipkin
+          image: openzipkin/zipkin
+          ports:
+            - containerPort: 9411
